@@ -1,0 +1,113 @@
+/*Criar novo usuario no banco e dados sql com permissões fortes
+CREATE USER 'teste'@'localhost' IDENTIFIED BY 'teste';
+GRANT ALL PRIVILEGES ON * . * TO 'teste'@'localhost';
+ALTER USER 'teste'@'localhost' IDENTIFIED WITH mysql_native_password BY 'teste';
+*/
+
+DROP DATABASE matchjob;
+CREATE DATABASE matchjob;
+use matchjob;
+
+create table trabalho(
+id_trabalho integer PRIMARY KEY AUTO_INCREMENT,
+descricao_trabalho varchar(30)not null
+);
+
+create table tipo_conta(
+id_conta integer PRIMARY KEY AUTO_INCREMENT,
+descricao_conta varchar(30)not null
+);
+
+
+create table usuarios(
+id_usuario integer PRIMARY KEY AUTO_INCREMENT,
+usuario varchar(30)not null,
+celular varchar(30)not null,
+nome varchar(30) not null,
+sobrenome varchar(30) not null,
+email varchar(30) not null,
+avatar varchar(10000) not null,
+bio varchar(500) not null,
+id_trabalho integer,
+id_conta integer,
+CONSTRAINT fk_UserTrabalho FOREIGN KEY (id_trabalho) REFERENCES trabalho (id_trabalho),
+CONSTRAINT fk_UserConta FOREIGN KEY (id_conta) REFERENCES tipo_conta (id_conta)
+);
+
+create table acoes(
+id_acao integer PRIMARY KEY AUTO_INCREMENT,
+descricao_acao varchar(30)not null
+);
+
+create table registra_acao(
+id_registro_acao integer primary key auto_increment,
+id_usuario1 integer,
+id_acao integer,
+id_usuario2 integer,
+constraint fk_user1 foreign key (id_usuario1) references usuarios(id_usuario),
+constraint fk_acao foreign key (id_acao) references acoes(id_acao),
+constraint fk_user2 foreign key (id_usuario2) references usuarios(id_usuario)
+);
+
+
+
+INSERT INTO trabalho(descricao_trabalho) VALUES ("Jardineiro") ;
+INSERT INTO trabalho(descricao_trabalho) VALUES ("Padeiro") ;
+INSERT INTO trabalho(descricao_trabalho) VALUES ("Engenheiro de Software") ;
+
+INSERT INTO tipo_conta(descricao_conta) VALUES ("Empregador") ;
+INSERT INTO tipo_conta(descricao_conta) VALUES ("Empregado") ;
+
+INSERT INTO acoes(descricao_acao) VALUES ("Like") ;
+INSERT INTO acoes(descricao_acao) VALUES ("Dislike") ;
+
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Gusguns","1194236178","Gustavo","Lima","gu.lim@hotmail.com","https://ca.slack-edge.com/T0LJVNC20-U70KD8EE4-352f206a4296-512","Desenvolvedor",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Danielk3","1194236178","Daniel","Lima","daniel.lim@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.6435-9/87034887_788048235029536_5172208151390322688_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=174925&_nc_ohc=Shol1Il3VCkAX-EIVX8&_nc_ht=scontent.fbjp2-1.fna&oh=18ae904af3de3fb857ab3e19b460c39c&oe=618321D7","Desenvolvedor",3,1);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Danilo","1194236178","Danilo","Lima","danilo@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.6435-9/174318596_3950710351675257_2295244683061226926_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=EDCpdOEea0kAX_jp8au&_nc_ht=scontent.fbjp2-1.fna&oh=441a11b30b4c933d30ee9929b2d5d0c3&oe=6181DBE9","Desenvolvedor",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Flavio","1194236178","Flavio","Leme","flaviom@hotmail.com","https://ca.slack-edge.com/T0LJVNC20-UF9AR6WTY-df62bc826d85-512","Diretor financeiro",2,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Mariana","1194236178","Mariana","Braga","mariana@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.18169-9/17155467_1226877487426936_5161579139914822731_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=174925&_nc_ohc=M4jNKPrJehcAX_jpdBl&_nc_ht=scontent.fbjp2-1.fna&oh=59cd513faa93116dba71d90391ce9698&oe=61823363","Desenvolvedora",3,2);
+/*
+INSERT INTO registra_acao(id_usuario1,id_acao,id_usuario2) VALUES (1,1,2); 
+*/
+select * from trabalho;
+select * from acoes;
+select * from registra_acao;
+
+
+select a.id_registro_acao, a.id_usuario1,a.id_acao,a.id_usuario2,u.usuario,ac.descricao_acao,u2.usuario from registra_acao a 
+inner join usuarios u on a.id_usuario1 = u.id_usuario
+inner join usuarios u2 on a.id_usuario2 = u2.id_usuario
+inner join acoes ac on a.id_acao = ac.id_acao
+where a.id_usuario1 = 1 and a.id_usuario2 = 2 and ac.id_acao = 1
+union
+select a.id_registro_acao, a.id_usuario1,a.id_acao,a.id_usuario2,u.usuario,ac.descricao_acao,u2.usuario from registra_acao a 
+inner join usuarios u on a.id_usuario1 = u.id_usuario
+inner join usuarios u2 on a.id_usuario2 = u2.id_usuario
+inner join acoes ac on a.id_acao = ac.id_acao
+where a.id_usuario1 = 2 and a.id_usuario2 = 1 and ac.id_acao = 1
+;
+
+select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta 
+where u.id_usuario not in (select a.id_usuario2 from usuarios u 
+inner join trabalho t on u.id_trabalho = t.id_trabalho 
+inner join tipo_conta c on u.id_conta = c.id_conta 
+left join registra_acao a on u.id_usuario = a.id_usuario1
+left join acoes ac on a.id_acao = ac.id_acao
+where u.id_usuario in (1) 
+order by u.id_usuario) and u.id_usuario not in (1)
+;
+
+select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta order by u.id_usuario;
+
+/*
+select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where u.id_usuario not in (1,(select a.id_usuario2 from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta left join registra_acao a on u.id_usuario = a.id_usuario1 left join acoes ac on a.id_acao = ac.id_acao where u.id_usuario = ? order by u.id_usuario))
+*/
+
+/*QUERY 1
+"select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where u.id_usuario not in (select a.id_usuario2 from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta left join registra_acao a on u.id_usuario = a.id_usuario1 left join acoes ac on a.id_acao = ac.id_acao where u.id_usuario = ? order by u.id_usuario) and u.id_usuario not in (?)";
+*/
+
+/* QUERY 2
+select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where u.id_usuario not in (?)*/
+         
+         

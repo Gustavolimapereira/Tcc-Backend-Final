@@ -1,0 +1,11 @@
+{
+    "usuario": "teste10",
+    "senha": "teste1020304050",
+    "nome": "teste10",
+    "sobrenome": "teste10",
+    "email": "teste10.teste@hotmail.com",
+    "avatar": "https://cdn.shopify.com/s/files/1/2425/3665/products/102-022_800x.jpg?v=1574792050",
+    "bio": "teste",
+    "id_trabalho": 1,
+    "id_conta": 1
+}
