@@ -73,8 +73,8 @@ module.exports = {
     async UsuariosMatch(req, res) {
         const { id_usuario } = req.headers;
 
-        const sqlSelect = "select * from (select * from registra_acao where id_usuario1 = ? union select * from registra_acao where id_usuario2 = ?)tab inner join usuarios u on u.id_usuario = tab.id_usuario1 inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where tab.id_usuario1 != ?"
-        dbmysql.query(sqlSelect, [id_usuario,id_usuario,id_usuario], (err, result) => {
+        const sqlSelect = "select * from matchs m inner join usuarios u on u.id_usuario = m.id_usuario1 inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where id_usuario2 = ?"
+        dbmysql.query(sqlSelect, [id_usuario], (err, result) => {
             console.log(result);
             return res.json(result);
         });

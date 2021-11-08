@@ -1,4 +1,5 @@
 const database = require('../database/connection');
+const dbmysql = require('../database/connectionMysql');
 
 module.exports = {
     async acao(req, res) {
@@ -7,6 +8,7 @@ module.exports = {
         const { id_usuario1 } = req.headers;
         const { id_acao } = req.body;
         const { id_usuario2 } = req.params;
+        const newArray = [];
 
         console.log(id_usuario1, id_acao, id_usuario2);
 
@@ -28,6 +30,16 @@ module.exports = {
                 ]);
 
         if (verificaAcao.length >= 2) {
+            const sqlInsert = "insert into matchs (id_usuario1,id_usuario2) values (?, ?)";
+            dbmysql.query(sqlInsert,[id_usuario1,id_usuario2], (err, result) => {
+                console.log("Registros inseridos com sucesso na tabela matchs 1");
+            });
+
+            const sqlInsert2 = "insert into matchs (id_usuario1,id_usuario2) values (?, ?)";
+            dbmysql.query(sqlInsert2,[id_usuario2,id_usuario1], (err, result) => {
+                console.log("Registros inseridos com sucesso na tabela matchs 2");
+            });
+
             console.log('Deu Match');
             return res.status(200).json({ message: 'Deu Match' })
         } return res.json();

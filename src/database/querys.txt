@@ -18,6 +18,11 @@ id_conta integer PRIMARY KEY AUTO_INCREMENT,
 descricao_conta varchar(30)not null
 );
 
+create table matchs(
+id_match integer primary key auto_increment,
+id_usuario1 integer,
+id_usuario2 integer
+);
 
 create table usuarios(
 id_usuario integer PRIMARY KEY AUTO_INCREMENT,
@@ -54,6 +59,7 @@ constraint fk_user2 foreign key (id_usuario2) references usuarios(id_usuario)
 INSERT INTO trabalho(descricao_trabalho) VALUES ("Jardineiro") ;
 INSERT INTO trabalho(descricao_trabalho) VALUES ("Padeiro") ;
 INSERT INTO trabalho(descricao_trabalho) VALUES ("Engenheiro de Software") ;
+INSERT INTO trabalho(descricao_trabalho) VALUES ("GArçon") ;
 
 INSERT INTO tipo_conta(descricao_conta) VALUES ("Empregador") ;
 INSERT INTO tipo_conta(descricao_conta) VALUES ("Empregado") ;
@@ -62,10 +68,15 @@ INSERT INTO acoes(descricao_acao) VALUES ("Like") ;
 INSERT INTO acoes(descricao_acao) VALUES ("Dislike") ;
 
 INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Gusguns","1194236178","Gustavo","Lima","gu.lim@hotmail.com","https://ca.slack-edge.com/T0LJVNC20-U70KD8EE4-352f206a4296-512","Desenvolvedor",3,2);
-INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Danielk3","1194236178","Daniel","Lima","daniel.lim@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.6435-9/87034887_788048235029536_5172208151390322688_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=174925&_nc_ohc=Shol1Il3VCkAX-EIVX8&_nc_ht=scontent.fbjp2-1.fna&oh=18ae904af3de3fb857ab3e19b460c39c&oe=618321D7","Desenvolvedor",3,1);
-INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Danilo","1194236178","Danilo","Lima","danilo@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.6435-9/174318596_3950710351675257_2295244683061226926_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=EDCpdOEea0kAX_jp8au&_nc_ht=scontent.fbjp2-1.fna&oh=441a11b30b4c933d30ee9929b2d5d0c3&oe=6181DBE9","Desenvolvedor",3,2);
-INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Flavio","1194236178","Flavio","Leme","flaviom@hotmail.com","https://ca.slack-edge.com/T0LJVNC20-UF9AR6WTY-df62bc826d85-512","Diretor financeiro",2,2);
-INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Mariana","1194236178","Mariana","Braga","mariana@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.18169-9/17155467_1226877487426936_5161579139914822731_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=174925&_nc_ohc=M4jNKPrJehcAX_jpdBl&_nc_ht=scontent.fbjp2-1.fna&oh=59cd513faa93116dba71d90391ce9698&oe=61823363","Desenvolvedora",3,2);
+-- INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Danielk3","1194236178","Daniel","Lima","daniel.lim@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.6435-9/87034887_788048235029536_5172208151390322688_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=174925&_nc_ohc=Shol1Il3VCkAX-EIVX8&_nc_ht=scontent.fbjp2-1.fna&oh=18ae904af3de3fb857ab3e19b460c39c&oe=618321D7","Desenvolvedor",3,1);
+-- INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Danilo","1194236178","Danilo","Lima","danilo@hotmail.com","https://scontent.fbjp2-1.fna.fbcdn.net/v/t1.6435-9/174318596_3950710351675257_2295244683061226926_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=EDCpdOEea0kAX_jp8au&_nc_ht=scontent.fbjp2-1.fna&oh=441a11b30b4c933d30ee9929b2d5d0c3&oe=6181DBE9","Desenvolvedor",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Flavio","1194236178","Flavio","Leme","flaviom@hotmail.com","https://ca.slack-edge.com/T0LJVNC20-UF9AR6WTY-df62bc826d85-512","Diretor financeiro",3,2);
+-- INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Marianabraga","11996177463","Mariana","Braga","mariebrags@gmail.com","https://pbs.twimg.com/profile_images/1449607449875525634/zUGoYeUd_400x400.jpg","Programadora” – Trabalho na área desde 2019, utilizo linguagens de programação como C#, JavaScript, JAVA, Pearl e PhP, desenvolvo em HTML e CSS",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("MatheusM","11974218688","Matheus","Moraes","matheus.moraes96@hotmail.com","https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Foto_do_ator_Matheus_Costa.jpg/1200px-Foto_do_ator_Matheus_Costa.jpg","Designer de Gráfico – Sou Designer Gráfico criando projetos de comunicação visual, atuando desde 2018, na empresa DG Mark Estúdio de Design. Trabalho com os softwares: Adobe Photoshop, Adobe Fireworks, CorelDRAW, GIMP",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("BarbaraMuniz","11982635479","Barbara","Muniz","babs.muniz3@hotmail.com","https://pbs.twimg.com/profile_images/3752773870/17b8c35cc02cc8141af3d8fe3d4597e5_400x400.jpeg","Analista Contábil - Trabalho na Área Analista Contábil. Realizo análise, classificação e conciliação contábeis e financeiras, desenvolvo obrigações acessórias e apuro impostos diretos e indiretos. Elaboro balanços e balancetes e relatórios contábeis, por meio de análises de lançamentos e despesas. Trabalho ramo desde 2016 na empresa Contabilidade de São José dos Campos",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("FernandoPavani","11955369874","Fernando","Pavani","pavani.fernando@outlook.com.br"," https://www.mixpalestras.com.br/assets-custom/img/palestrantes/fernando-pavani_13022020_181745-G.jpg","Arquiteto Urbanista - Realizo o planejamento físico e financeiro de obras e elaboro projetos de edifícios e cidades, envolvendo ruas, parques e bairros. Realizo o processo de aprovação de projetos nos órgãos responsáveis e desenvolvo projetos de transportes e saneamento. Atualmente estou no ramo desde 2017, trabalhei na empresa BCMF Arquitetos no Rio de Janeiro",3,2);
+INSERT INTO usuarios(usuario,celular,nome,sobrenome,email,avatar,bio,id_trabalho,id_conta) VALUES ("Schwengber","1194236178","Vivian", "Schwengber","vivian_schwengbe@hotmail.com"," https://media-exp1.licdn.com/dms/image/C4E03AQGL-iARrkRfpQ/profile-displayphoto-shrink_200_200/0/1612832606372?e=1636588800&v=beta&t=395Sh0ySj_VDf8VqOFOa8NV4o5jUnVkmSNNVeWH9ZPE"," Customer Success Manager - Realizo o atendimento das empresas clientes e os oriento no uso do produto ou serviço. Realizando engajamento, apoio ao cliente, foco na estratégia, agilidade em demandas estratégicas, relação de parceira, entre outras qualidades. Trabalhei na empresa MK Solutions por 5 anos.",3,2);
+
 /*
 INSERT INTO registra_acao(id_usuario1,id_acao,id_usuario2) VALUES (1,1,2); 
 */
@@ -109,5 +120,28 @@ select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho 
 
 /* QUERY 2
 select * from usuarios u inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where u.id_usuario not in (?)*/
+         
+select * from (select * from registra_acao where id_usuario1 = 4 union select * from registra_acao where id_usuario2 = 4)tab 
+inner join usuarios u on u.id_usuario = tab.id_usuario1 
+inner join trabalho t on u.id_trabalho = t.id_trabalho 
+inner join tipo_conta c on u.id_conta = c.id_conta 
+where tab.id_usuario1 != 4; 
+
+select * from registra_acao;
+select * from matchs;
+
+-- select * from matchs m inner join usuarios u on u.id_usuario = m.id_usuario1 inner join trabalho t on u.id_trabalho = t.id_trabalho inner join tipo_conta c on u.id_conta = c.id_conta where id_usuario2 = ?
+
+
+
+
+
+
+
+
+
+
+
+         
          
          
